@@ -40,17 +40,17 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 2. CLIENTE UBUNTU - RED  CLIENTES
+  # 2. C_UBUNTU - RED  CLIENTES
   # =======================================================
-  config.vm.define "clienteUbuntu1" do |cliente|
+  config.vm.define "clienteUbuntu" do |cliente|
     cliente.vm.box = "ubuntu/jammy64"
-    cliente.vm.hostname = "cliente-alumnado"
+    cliente.vm.hostname = "cliente-ubuntu"
 
     # Interfaz conectada a la red interna
     # (recibe IP por DHCP del servidor Ubuntu)
     cliente.vm.network "private_network",
       type: "dhcp",
-      virtualbox__intnet: "red_alumnado"
+      virtualbox__intnet: "red_clientes"
 
     # Quitar la ruta por defecto de la NAT de Vagrant (10.0.2.2)
     # para que el cliente salga a Internet a través del servidor
@@ -60,17 +60,17 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 3. CLIENTE UBUNTU - RED SECRETARIA 
+  # 3. C_ WINDOWS - RED OFICINA
   # =======================================================
-  config.vm.define "clienteUbuntu2" do |cliente|
+  config.vm.define "clienteWindows" do |cliente|
     cliente.vm.box = "ubuntu/jammy64"
-    cliente.vm.hostname = "cliente-secretaria"
+    cliente.vm.hostname = "cliente-oficina"
 
     # Interfaz conectada a la red interna
-    # (recibe IP por DHCP del servidor Ubuntu)
+    # (recibe IP por DHCP del servidor Ubuntu o Windows)
     cliente.vm.network "private_network",
       type: "dhcp",
-      virtualbox__intnet: "red_secretaria"
+      virtualbox__intnet: "red_oficina"
 
     # Quitar la ruta por defecto de la NAT de Vagrant (10.0.2.2)
     cliente.vm.provision "shell",
@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 4. SERVIDOR WINDOWS - RED PROFESORADO
+  # 4. SERVIDOR WINDOWS - RED OFICINA
   # =======================================================
   config.vm.define "servidorWindows" do |servidor|
     servidor.vm.box = "StefanScherer/windows_2019"
