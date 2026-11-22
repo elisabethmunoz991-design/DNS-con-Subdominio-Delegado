@@ -1,0 +1,41 @@
+# Archivo de configuración isc-dhcp-server (Generado mediante Ansible)
+
+option domain-name "practica2.izv";
+default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+
+# RED OFICINA
+
+subnet {{ oficina_subred }} netmask {{ dhcp_netmask }} {
+
+  range {{ oficina_inicio_rango }} {{ oficina_fin_rango }};
+
+  option subnet-mask {{ dhcp_netmask }};
+  option broadcast-address {{ oficina_broadcast }};
+
+  # Configuración de Puerta de Enlace (El propio Servidor Router)
+  option routers {{ oficina_router }};
+
+  # Servidores DNS entregados a los clientes
+  option domain-name-servers {{ dns }};
+
+}
+
+# RED CLIENTES
+
+subnet {{ clientes_subred }} netmask {{ dhcp_netmask }} {
+
+  range {{ clientes_inicio_rango }} {{ clientes_fin_rango }};
+
+  option subnet-mask {{ dhcp_netmask }};
+  option broadcast-address {{ clientes_broadcast }};
+
+  # Configuración de Puerta de Enlace (El propio Servidor Router)
+  option routers {{ clientes_router }};
+
+  # Servidores DNS entregados a los clientes
+  option domain-name-servers {{ dns }};
+
+}
+

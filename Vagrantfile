@@ -1,4 +1,4 @@
- -*- mode: ruby -*-
+# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
@@ -60,25 +60,6 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 3. C_ WINDOWS - RED OFICINA
-  # =======================================================
-  config.vm.define "clienteWindows" do |cliente|
-    cliente.vm.box = "ubuntu/jammy64"
-    cliente.vm.hostname = "cliente-oficina"
-
-    # Interfaz conectada a la red interna
-    # (recibe IP por DHCP del servidor Ubuntu o Windows)
-    cliente.vm.network "private_network",
-      type: "dhcp",
-      virtualbox__intnet: "red_oficina"
-
-    # Quitar la ruta por defecto de la NAT de Vagrant (10.0.2.2)
-    cliente.vm.provision "shell",
-      run: "always",
-      inline: "ip route del default via 10.0.2.2 || true"
-  end
-
-  # =======================================================
   # 4. SERVIDOR WINDOWS - RED OFICINA
   # =======================================================
   config.vm.define "servidorWindows" do |servidor|
@@ -96,7 +77,7 @@ Vagrant.configure("2") do |config|
     # (con DHCP, recibe IP por MAC desde el servidor Ubuntu)
     servidor.vm.network "private_network",
       type: "dhcp",
-      virtualbox__intnet: "red_profesorado"
+      virtualbox__intnet: "red_oficina"
 
     servidor.vm.provider "virtualbox" do |vb|
       vb.gui = true
@@ -109,17 +90,17 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 5. CLIENTE(3) - WINDOWS 10 - RED PROFESORADO
+  # 5. C_WINDOWS10 - RED OFICINA
   # =======================================================
   config.vm.define "clienteWindows" do |cliente|
     cliente.vm.box = "StefanScherer/windows_10"
-    cliente.vm.hostname = "cliente-profesorado"
+    cliente.vm.hostname = "cliente-oficina"
 
     # Interfaz conectada a la red interna
     # (con DHCP, puede recibir IP de Ubuntu o de Windows Server)
     cliente.vm.network "private_network",
       type: "dhcp",
-      virtualbox__intnet: "red_profesorado"
+      virtualbox__intnet: "red_oficina"
 
     cliente.vm.provider "virtualbox" do |vb|
       vb.gui = true
