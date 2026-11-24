@@ -24,7 +24,8 @@
 
 
 
-    dns: "8.8.8.8, 1.1.1.1"
+    oficina_dns: "192.168.200.1"
+    clientes_dns: "192.168.222.1"
     dhcp_netmask: "255.255.255.0"
 
   tasks:
@@ -52,30 +53,21 @@
         state: present
         reload: yes
 
-    - name: Configurar regla MASQUERADE alumnado
+    - name: Configurar regla MASQUERADE oficina
       ansible.builtin.iptables:
         table: nat
         chain: POSTROUTING
         out_interface: "{{ wan_interface }}"
-        source: "{{ alumnado_subred }}/24"
+        source: "{{ oficina_subred }}/24"
         jump: MASQUERADE
         comment: "Regla NAT para salida a Internet de la LAN"
     
-    - name: Configurar regla MASQUERADE secretaría
+    - name: Configurar regla MASQUERADE clientes
       ansible.builtin.iptables:
         table: nat
         chain: POSTROUTING
         out_interface: "{{ wan_interface }}"
-        source: "{{ secretaria_subred }}/24"
-        jump: MASQUERADE
-        comment: "Regla NAT para salida a Internet de la LAN"
-
-    - name: Configurar regla MASQUERADE profesorado
-      ansible.builtin.iptables:
-        table: nat
-        chain: POSTROUTING
-        out_interface: "{{ wan_interface }}"
-        source: "{{ profesorado_subred }}/24"
+        source: "{{ clientes_subred }}/24"
         jump: MASQUERADE
         comment: "Regla NAT para salida a Internet de la LAN"
 

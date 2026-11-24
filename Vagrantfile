@@ -74,18 +74,18 @@ Vagrant.configure("2") do |config|
     servidor.vm.boot_timeout = 600
 
     # Interfaz conectada a la red interna
-    # (con DHCP, recibe IP por MAC desde el servidor Ubuntu)
+    # (con DHCP, recibe IP fija del servidor Ubuntu)
     servidor.vm.network "private_network",
-      type: "dhcp",
+      # type: "dhcp",
+      ip: "192.168.200.2",
+      netmask: "255.255.255.0",
       virtualbox__intnet: "red_oficina"
 
     servidor.vm.provider "virtualbox" do |vb|
       vb.gui = true
       vb.memory = "2048"
       vb.cpus = 2
-      # FIJAMOS LA MAC EN VB: tarjeta 2 (red interna).
-      # Debe coincidir con windows_mac del playbook.yml
-      vb.customize ["modifyvm", :id, "--macaddress2", "080027000010"]
+      
     end
   end
 

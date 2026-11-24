@@ -18,7 +18,7 @@ subnet {{ oficina_subred }} netmask {{ dhcp_netmask }} {
   option routers {{ oficina_router }};
 
   # Servidores DNS entregados a los clientes
-  option domain-name-servers {{ dns }};
+  option domain-name-servers {{ oficina_dns }};
 
 }
 
@@ -35,7 +35,7 @@ subnet {{ clientes_subred }} netmask {{ dhcp_netmask }} {
   option routers {{ clientes_router }};
 
   # Servidores DNS entregados a los clientes
-  option domain-name-servers {{ dns }};
+  option domain-name-servers {{ clientes_dns }};
 
 }
 
