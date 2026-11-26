@@ -1,0 +1,30 @@
+;
+; Zona directa practica2.izv
+;
+$TTL	86400
+@	IN	SOA	dns.practica2.izv. admin.practica2.izv. (
+		 2026112402		; Serial
+			   3600   	; Refresh
+			   1800		; Retry
+			 604800		; Expire
+			  86400 )	; Negative Cache TTL
+
+; Servidor DNS de la zona
+@	IN	NS	dns.practica2.izv.
+
+; Servidor de correo
+@	IN	MX	10 mail.practica2.izv.
+
+; Equipos	
+
+dns	IN	A	192.168.200.1
+web	IN	A	192.168.200.3
+mail	IN	A	192.168.200.4
+
+; Alias
+smtp	IN	CNAME	mail
+
+; Delegación del subdominio 
+
+munoz		IN	NS	dns.munoz.practica2.izv.
+dns.munoz	IN	A	192.168.200.2

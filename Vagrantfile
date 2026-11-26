@@ -10,11 +10,11 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 1. SERVIDOR UBUNTU - SERVIDOR DNS Y DHCP 
+  # 1. SERVIDOR UBUNTU - ROUTER, DHCP Y DNS
   # =======================================================
   config.vm.define "servidor" do |servidor|
     servidor.vm.box = "ubuntu/jammy64"
-    servidor.vm.hostname = "servidor-ubuntu"
+    servidor.vm.hostname = "dns.practica2.izv"
 
     # Interfaz 1 enp0s3: NAT
     # Se configura por defecto para gestión SSH y salida a Internet
@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     cliente.vm.hostname = "cliente-ubuntu"
 
     # Interfaz conectada a la red interna
-    # (recibe IP por DHCP del servidor Ubuntu)
+    # recibe IP por DHCP del servidor Ubuntu
     cliente.vm.network "private_network",
       type: "dhcp",
       virtualbox__intnet: "red_clientes"
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 4. SERVIDOR WINDOWS - RED OFICINA
+  # 3. SERVIDOR WINDOWS - RED OFICINA - DNS SUBDOMINIO
   # =======================================================
   config.vm.define "servidorWindows" do |servidor|
     servidor.vm.box = "StefanScherer/windows_2019"
@@ -73,8 +73,8 @@ Vagrant.configure("2") do |config|
     servidor.vm.communicator = "winrm"
     servidor.vm.boot_timeout = 600
 
-    # Interfaz conectada a la red interna
-    # (con DHCP, recibe IP fija del servidor Ubuntu)
+    # Interfaz conectada a la red interna oficina
+    # IP fija configurada por Vagrant
     servidor.vm.network "private_network",
       # type: "dhcp",
       ip: "192.168.200.2",
@@ -90,14 +90,14 @@ Vagrant.configure("2") do |config|
   end
 
   # =======================================================
-  # 5. C_WINDOWS10 - RED OFICINA
+  # 4. C_WINDOWS10 - RED OFICINA
   # =======================================================
   config.vm.define "clienteWindows" do |cliente|
     cliente.vm.box = "StefanScherer/windows_10"
     cliente.vm.hostname = "cliente-oficina"
 
-    # Interfaz conectada a la red interna
-    # (con DHCP, puede recibir IP de Ubuntu o de Windows Server)
+    # Interfaz conectada a la red interna oficina
+    # Recibe DHCP de Ubuntu Server
     cliente.vm.network "private_network",
       type: "dhcp",
       virtualbox__intnet: "red_oficina"

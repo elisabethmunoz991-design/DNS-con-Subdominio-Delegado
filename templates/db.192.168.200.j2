@@ -1,0 +1,23 @@
+;
+; Zona inversa 200
+;
+$TTL	86400
+@	IN	SOA	dns.practica2.izv. admin.practica2.izv. (
+		     2026112401		; Serial
+			   3600		; Refresh
+			   1800		; Retry
+			 604800		; Expire
+			  86400 )	; Negative Cache TTL
+
+; Servidor DNS de la zona
+@	IN	NS	dns.practica2.izv.
+
+; Equipos de la red oficina
+
+1	IN	PTR	dns.practica2.izv.
+2	IN	PTR	dns.munoz.practica2.izv.
+3	IN	PTR	web.practica2.izv.
+4	IN	PTR	mail.practica2.izv.
+5	IN	PTR	impresora.munoz.practica2.izv.
+6	IN	PTR	ftp.munoz.practica2.izv.
+7	IN	PTR	fichaje.munoz.practica2.izv.

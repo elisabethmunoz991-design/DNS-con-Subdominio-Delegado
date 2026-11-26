@@ -1,0 +1,20 @@
+
+// Zona directa
+zone "practica2.izv" {
+        type master;
+        file "/var/lib/bind/db.practica2.izv";
+	forwarders { };
+};
+
+// Zona inversa de la red oficina (192.168.200.0/24)
+zone "200.168.192.in-addr.arpa" {
+        type master;
+        file "/var/lib/bind/db.192.168.200";
+};
+
+// Zona inversa de la red clientes (192.168.222.0/24)
+zone "222.168.192.in-addr.arpa" {
+        type master;
+        file "/var/lib/bind/db.192.168.222";
+}; 
+
